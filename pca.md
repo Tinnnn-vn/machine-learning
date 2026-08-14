@@ -87,3 +87,112 @@ Trong PCA:
 
 - Vector riêng trở thành hướng của các thành phần chính;
 - Trị riêng càng lớn thì thành phần đó càng quan trọng.
+
+## 4. Quy trình PCA qua một ví dụ nhỏ
+
+Ta có 5 mẫu và 2 đặc trưng:
+
+| Mẫu | $X_1$ | $X_2$ |
+|---|---:|---:|
+| A | 1 | 2 |
+| B | 2 | 3 |
+| C | 3 | 5 |
+| D | 4 | 6 |
+| E | 5 | 9 |
+
+Ma trận ban đầu có kích thước:
+
+$$
+X_{gốc}: (5,2) = (\text{5 mẫu},\text{2 đặc trưng})
+$$
+
+### Bước 1: Đưa tâm dữ liệu về 0
+
+Trung bình của hai cột lần lượt là 3 và 5. Ta lấy từng giá trị trừ trung bình cột tương ứng:
+
+| Mẫu | $X_1-3$ | $X_2-5$ |
+|---|---:|---:|
+| A | -2 | -3 |
+| B | -1 | -2 |
+| C | 0 | 0 |
+| D | 1 | 1 |
+| E | 2 | 4 |
+
+Đây gọi là **center dữ liệu**. Việc này chỉ dời cả đám mây điểm về gốc tọa độ, không làm thay đổi hình dạng của nó.
+
+### Bước 2: Tạo ma trận hiệp phương sai
+
+Với $n=5$ mẫu:
+
+$$
+\Sigma = \frac{1}{n-1}X^TX
+=
+\begin{bmatrix}
+2.5 & 4.25\\
+4.25 & 7.5
+\end{bmatrix}
+$$
+
+Kích thước thay đổi như sau:
+
+$$
+X^T_{(2,5)}X_{(5,2)}=\Sigma_{(2,2)}
+$$
+
+Hai số `4.25` dương và khá lớn cho thấy $X_1$ và $X_2$ thường tăng cùng nhau.
+
+### Bước 3: Tìm các hướng mới
+
+Từ ma trận $\Sigma$, ta thu được gần đúng:
+
+| Thành phần | Trị riêng | Vector riêng |
+|---|---:|---|
+| PC1 | 9.93 | $[0.51,\ 0.86]$ |
+| PC2 | 0.07 | $[-0.86,\ 0.51]$ |
+
+PC1 có thể hiểu là:
+
+$$
+PC1 = 0.51X_1 + 0.86X_2
+$$
+
+Cả hai đặc trưng đều đóng góp cùng chiều, nhưng $X_2$ có ảnh hưởng mạnh hơn một chút.
+
+### Bước 4: Đổi tọa độ
+
+Ghép các vector riêng thành ma trận chiếu:
+
+$$
+W=
+\begin{bmatrix}
+0.51 & -0.86\\
+0.86 & 0.51
+\end{bmatrix}
+$$
+
+Tọa độ mới, còn gọi là **scores**, được tính bằng:
+
+$$
+Z=XW
+$$
+
+Nếu chỉ muốn giảm từ 2 chiều xuống 1 chiều, ta chỉ giữ cột PC1 của $W$:
+
+$$
+X_{(5,2)}W_{(2,1)}=Z_{(5,1)}
+$$
+
+### Bước 5: Kiểm tra lượng thông tin giữ lại
+
+Tỉ lệ phương sai giải thích của thành phần thứ $i$ là:
+
+$$
+r_i=\frac{\lambda_i}{\sum_j\lambda_j}
+$$
+
+Trong ví dụ này:
+
+- PC1 giữ khoảng $9.93/10=99.3\%$ phương sai;
+- PC2 giữ khoảng $0.07/10=0.7\%$ phương sai.
+
+Như vậy, thay hai cột bằng một cột PC1 vẫn giữ được gần như toàn bộ cấu trúc chính của dữ liệu.
