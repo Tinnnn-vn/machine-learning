@@ -42,3 +42,48 @@ flowchart LR
 Trong PCA, **thông tin** được đo gần đúng bằng **phương sai**: dữ liệu càng trải rộng trên một hướng thì hướng ấy càng giúp phân biệt các mẫu.
 
 > PCA không chọn vài cột cũ để giữ lại. Nó tạo ra các cột mới bằng cách trộn những cột ban đầu.
+
+## 3. Ba khái niệm cần biết
+
+### Phương sai (variance)
+
+Phương sai cho biết các giá trị phân tán quanh giá trị trung bình nhiều hay ít.
+
+- Phương sai nhỏ: các giá trị nằm gần nhau.
+- Phương sai lớn: các giá trị cách xa nhau.
+
+### Hiệp phương sai (covariance)
+
+Hiệp phương sai cho biết hai đặc trưng thường thay đổi cùng nhau ra sao.
+
+- Dương: một đại lượng tăng thì đại lượng kia thường tăng.
+- Âm: một đại lượng tăng thì đại lượng kia thường giảm.
+- Gần 0: chưa thấy quan hệ tuyến tính rõ ràng.
+
+Ma trận hiệp phương sai của hai đặc trưng có dạng:
+
+$$
+\Sigma =
+\begin{bmatrix}
+\operatorname{Var}(X_1) & \operatorname{Cov}(X_1,X_2)\\
+\operatorname{Cov}(X_2,X_1) & \operatorname{Var}(X_2)
+\end{bmatrix}
+$$
+
+Đường chéo chứa phương sai của từng đặc trưng; hai ô còn lại cho biết chúng thay đổi cùng nhau thế nào.
+
+### Vector riêng và trị riêng
+
+Với phương trình
+
+$$
+\Sigma v = \lambda v
+$$
+
+- $v$ là **vector riêng**: hướng đặc biệt không bị đổi hướng khi qua phép biến đổi $\Sigma$;
+- $\lambda$ là **trị riêng**: mức độ dữ liệu trải rộng theo hướng đó.
+
+Trong PCA:
+
+- Vector riêng trở thành hướng của các thành phần chính;
+- Trị riêng càng lớn thì thành phần đó càng quan trọng.
