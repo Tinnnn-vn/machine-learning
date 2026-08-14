@@ -23,3 +23,22 @@ PCA thường được dùng để:
 - giảm nhiễu;
 - phát hiện nhóm hoặc điểm bất thường;
 - giúp một số mô hình học máy chạy nhanh hơn.
+
+## 2. Trực giác: Tìm góc nhìn tốt nhất
+
+Hãy tưởng tượng các điểm dữ liệu là một đám mây dài và nghiêng. Nếu chiếu chúng xuống một đường thẳng phù hợp, các “bóng” vẫn cách xa nhau và ta còn nhận ra hình dạng chính của đám mây.
+
+- **PC1** là hướng mà các bóng trải rộng nhất. Nó giữ nhiều thông tin nhất.
+- **PC2** vuông góc với PC1 và giữ phần biến đổi quan trọng tiếp theo.
+- PC3, PC4… cũng được tìm tương tự.
+
+```mermaid
+flowchart LR
+    A["Dữ liệu nhiều đặc trưng"] --> B["Tìm hướng biến đổi lớn nhất"]
+    B --> C["Chiếu dữ liệu lên các hướng mới"]
+    C --> D["Giữ vài thành phần quan trọng"]
+```
+
+Trong PCA, **thông tin** được đo gần đúng bằng **phương sai**: dữ liệu càng trải rộng trên một hướng thì hướng ấy càng giúp phân biệt các mẫu.
+
+> PCA không chọn vài cột cũ để giữ lại. Nó tạo ra các cột mới bằng cách trộn những cột ban đầu.
