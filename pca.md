@@ -221,6 +221,76 @@ Nên standardize trước PCA khi các cột dùng đơn vị hoặc thang đo k
 
 Không nên standardize một cách máy móc khi độ lớn thật sự mang ý nghĩa cần giữ. Quyết định này phụ thuộc vào bài toán.
 
+## 7. Chọn bao nhiêu thành phần?
+
+Có ba cách phổ biến:
+
+1. **Ngưỡng phương sai tích lũy:** giữ đủ thành phần để đạt 90%, 95% hoặc 99%.
+2. **Điểm khuỷu:** trên biểu đồ scree plot, chọn vị trí mà lợi ích bắt đầu giảm rõ rệt.
+3. **Đánh giá mô hình:** thử nhiều giá trị và chọn số thành phần cho kết quả tốt nhất trên dữ liệu kiểm tra.
+
+Không có ngưỡng đúng cho mọi bài toán. Nén ảnh có thể ưu tiên kích thước nhỏ; chẩn đoán y khoa thường cần giữ nhiều thông tin hơn.
+
+## 8. Loadings và scores có nghĩa gì?
+
+| Thuật ngữ | Câu hỏi nó trả lời |
+|---|---|
+| **Loadings** | Mỗi đặc trưng cũ đóng góp bao nhiêu vào một PC? |
+| **Scores** | Mỗi mẫu nằm ở đâu trong hệ tọa độ PC mới? |
+
+Ví dụ với dữ liệu ô tô:
+
+$$
+PC1=0.6(\text{công suất})+0.5(\text{khối lượng})-0.4(\text{tiết kiệm xăng})
+$$
+
+Ta có thể đặt tên dễ hiểu cho PC1 là “mạnh và nặng ↔ nhẹ và tiết kiệm”. Tên này là cách con người diễn giải, không phải tên do PCA tự sinh ra.
+
+Khi vẽ scores của PC1 và PC2:
+
+- điểm gần nhau thường là các mẫu tương tự;
+- các cụm có thể gợi ý những nhóm tự nhiên;
+- điểm đứng riêng có thể là trường hợp bất thường.
+
+> Dấu của một vector riêng có thể bị đảo mà kết quả PCA vẫn tương đương. Vì vậy `[0.51, 0.86]` và `[-0.51, -0.86]` mô tả cùng một trục.
+
+## 9. Thực hành bằng Python
+
+```python
+import numpy as np
+from sklearn.decomposition import PCA
+from sklearn.preprocessing import StandardScaler
+
+# 5 mẫu, 2 đặc trưng
+X = np.array([
+    [1, 2],
+    [2, 3],
+    [3, 5],
+    [4, 6],
+    [5, 9],
+])
+
+# Nên dùng khi các đặc trưng khác đơn vị hoặc khác thang đo
+X_scaled = StandardScaler().fit_transform(X)
+
+# Giảm dữ liệu xuống còn 1 chiều
+pca = PCA(n_components=1)
+X_pca = pca.fit_transform(X_scaled)
+
+print("Kích thước cũ:", X.shape)       # (5, 2)
+print("Kích thước mới:", X_pca.shape) # (5, 1)
+print("Tỉ lệ phương sai giữ lại:", pca.explained_variance_ratio_)
+print("Loadings:", pca.components_)
+```
+
+Lưu ý: kết quả đoạn mã này khác đôi chút so với phép tính ở phần 4 vì đoạn mã đã **standardize**, còn ví dụ thủ công chỉ **center** dữ liệu.
+
+Nếu muốn tự chọn số thành phần để giữ ít nhất 95% phương sai:
+
+```python
+pca = PCA(n_components=0.95)
+X_pca = pca.fit_transform(X_scaled)
+```
 
 
 
