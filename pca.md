@@ -65,8 +65,8 @@ Ma trận hiệp phương sai của hai đặc trưng có dạng:
 $$
 \Sigma =
 \begin{bmatrix}
-\operatorname{Var}(X_1) & \operatorname{Cov}(X_1,X_2)\\
-\operatorname{Cov}(X_2,X_1) & \operatorname{Var}(X_2)
+\mathrm{Var}(X_1) & \mathrm{Cov}(X_1,X_2) \\\\
+\mathrm{Cov}(X_2,X_1) & \mathrm{Var}(X_2)
 \end{bmatrix}
 $$
 
@@ -124,14 +124,7 @@ Trung bình của hai cột lần lượt là 3 và 5. Ta lấy từng giá tr�
 
 Với $n=5$ mẫu:
 
-$$
-\Sigma = \frac{1}{n-1}X^TX
-=
-\begin{bmatrix}
-2.5 & 4.25\\
-4.25 & 7.5
-\end{bmatrix}
-$$
+$$\Sigma = \frac{1}{n-1}X^TX = \begin{bmatrix} 2.5 & 4.25 \\\\ 4.25 & 7.5 \end{bmatrix}$$
 
 Kích thước thay đổi như sau:
 
