@@ -189,3 +189,43 @@ Trong ví dụ này:
 - PC2 giữ khoảng $0.07/10=0.7\%$ phương sai.
 
 Như vậy, thay hai cột bằng một cột PC1 vẫn giữ được gần như toàn bộ cấu trúc chính của dữ liệu.
+
+## 5. Vì sao PCA lại dùng vector riêng?
+
+Gọi $u$ là một hướng có độ dài bằng 1. Khi chiếu dữ liệu đã được đưa tâm lên hướng đó, phương sai thu được là:
+
+$$\mathrm{Var}(Xu) = u^T\Sigma u$$
+
+Nếu $u$ là vector riêng $v$ của $\Sigma$, ta có $\Sigma v=\lambda v$. Khi đó:
+
+$$
+v^T\Sigma v=v^T(\lambda v)=\lambda(v^Tv)=\lambda
+$$
+
+Vì $v$ có độ dài 1 nên $v^Tv=1$. Do đó:
+
+> Phương sai trên một hướng riêng chính bằng trị riêng của hướng ấy.
+
+Chọn vector có trị riêng lớn nhất chính là chọn hướng giữ được nhiều phương sai nhất. Đó là PC1.
+
+## 6. Center và standardize không giống nhau
+
+- **Center:** trừ giá trị trung bình, làm mỗi cột có trung bình bằng 0.
+- **Standardize:** tiếp tục chia cho độ lệch chuẩn, làm mỗi cột có độ lệch chuẩn bằng 1.
+
+$$
+x_{scaled}=\frac{x-\mu}{\sigma}
+$$
+
+Nên standardize trước PCA khi các cột dùng đơn vị hoặc thang đo khác nhau, chẳng hạn tuổi, thu nhập và chiều cao. Nếu không, cột có số lớn có thể lấn át các cột còn lại chỉ vì đơn vị đo.
+
+Không nên standardize một cách máy móc khi độ lớn thật sự mang ý nghĩa cần giữ. Quyết định này phụ thuộc vào bài toán.
+
+
+
+
+
+
+
+
+
